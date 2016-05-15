@@ -14,6 +14,8 @@
 		441E53471CE81CB6003D0E19 /* RefreshTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E53461CE81CB6003D0E19 /* RefreshTVC.swift */; };
 		441E53491CE822D7003D0E19 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E53481CE822D7003D0E19 /* RefreshView.swift */; };
 		441E534B1CE8326C003D0E19 /* RefreshItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E534A1CE8326C003D0E19 /* RefreshItem.swift */; };
+		441E534F1CE86ABD003D0E19 /* HartTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E534E1CE86ABD003D0E19 /* HartTVC.swift */; };
+		441E53511CE86BFC003D0E19 /* HartRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E53501CE86BFC003D0E19 /* HartRefreshView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		441E53461CE81CB6003D0E19 /* RefreshTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTVC.swift; sourceTree = "<group>"; };
 		441E53481CE822D7003D0E19 /* RefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
 		441E534A1CE8326C003D0E19 /* RefreshItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshItem.swift; sourceTree = "<group>"; };
+		441E534E1CE86ABD003D0E19 /* HartTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HartTVC.swift; sourceTree = "<group>"; };
+		441E53501CE86BFC003D0E19 /* HartRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HartRefreshView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +62,34 @@
 		441E53331CE81C6E003D0E19 /* PullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				441E534D1CE86AA1003D0E19 /* HartPullToRefresh */,
+				441E534C1CE86916003D0E19 /* Cat */,
 				441E53341CE81C6E003D0E19 /* AppDelegate.swift */,
-				441E53461CE81CB6003D0E19 /* RefreshTVC.swift */,
-				441E53481CE822D7003D0E19 /* RefreshView.swift */,
-				441E534A1CE8326C003D0E19 /* RefreshItem.swift */,
 				441E53381CE81C6E003D0E19 /* Main.storyboard */,
 				441E533B1CE81C6E003D0E19 /* Assets.xcassets */,
 				441E533D1CE81C6E003D0E19 /* LaunchScreen.storyboard */,
 				441E53401CE81C6E003D0E19 /* Info.plist */,
 			);
 			path = PullToRefresh;
+			sourceTree = "<group>";
+		};
+		441E534C1CE86916003D0E19 /* Cat */ = {
+			isa = PBXGroup;
+			children = (
+				441E53461CE81CB6003D0E19 /* RefreshTVC.swift */,
+				441E53481CE822D7003D0E19 /* RefreshView.swift */,
+				441E534A1CE8326C003D0E19 /* RefreshItem.swift */,
+			);
+			name = Cat;
+			sourceTree = "<group>";
+		};
+		441E534D1CE86AA1003D0E19 /* HartPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				441E534E1CE86ABD003D0E19 /* HartTVC.swift */,
+				441E53501CE86BFC003D0E19 /* HartRefreshView.swift */,
+			);
+			name = HartPullToRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +164,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				441E53491CE822D7003D0E19 /* RefreshView.swift in Sources */,
+				441E53511CE86BFC003D0E19 /* HartRefreshView.swift in Sources */,
 				441E53351CE81C6E003D0E19 /* AppDelegate.swift in Sources */,
 				441E534B1CE8326C003D0E19 /* RefreshItem.swift in Sources */,
 				441E53471CE81CB6003D0E19 /* RefreshTVC.swift in Sources */,
+				441E534F1CE86ABD003D0E19 /* HartTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
