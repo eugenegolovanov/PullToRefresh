@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol RefreshViewDelegate: class {
+    func refreshViewDidRefresh(refreshView:RefreshView)
+}
+
+
+
 private let sceneHeight:CGFloat = 150
 
 class RefreshView: UIView {
@@ -20,6 +26,9 @@ class RefreshView: UIView {
     
     var refreshItems = [RefreshItem]()
     
+    
+    weak var delegate: RefreshViewDelegate?
+    var isRefreshing = false
     
     //-------------------------------------------------------------------------------------------------------------
     // MARK: - init
@@ -68,25 +77,25 @@ class RefreshView: UIView {
         
         let sunItem = RefreshItem(
             view: sunImageView,
-            centerEnd: CGPointMake(CGRectGetWidth(bounds) * 0.1, CGRectGetHeight(bounds) - CGRectGetHeight(buildingsImageView.bounds) - CGRectGetHeight(groundImageView.bounds) - CGRectGetHeight(sunImageView.bounds)),
+            centerEnd: CGPointMake(CGRectGetWidth(bounds) * 0.1, CGRectGetHeight(bounds) - CGRectGetHeight(buildingsImageView.bounds) - CGRectGetHeight(sunImageView.bounds)),
             parallaxRatio: 3.0,
             sceneHeight: sceneHeight)
 
         let catItem = RefreshItem(
             view: catImageView,
-            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/1.5),
+            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/2 - CGRectGetHeight(groundImageView.bounds)/2),
             parallaxRatio: 1,
             sceneHeight: sceneHeight)
 
         let capeBackItem = RefreshItem(
             view: capeBack,
-            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/1.5),
+            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/2 - CGRectGetHeight(groundImageView.bounds)/2),
             parallaxRatio: -3,
             sceneHeight: sceneHeight)
         
         let capeFrontItem = RefreshItem(
             view: capeFront,
-            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/1.5),
+            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/2 - CGRectGetHeight(groundImageView.bounds)/2),
             parallaxRatio: -3,
             sceneHeight: sceneHeight)
 
@@ -113,17 +122,66 @@ class RefreshView: UIView {
     }
     
     
+    
+    //-------------------------------------------------------------------------------------------------------------
+    // MARK: - Refresh Methods
+
+    func beginRefresh() {
+        self.isRefreshing = true
+        
+        UIView.animateKeyframesWithDuration(0.4, delay: 0, options: [], animations: {
+            self.scrollView.contentInset.top += sceneHeight
+            }) { (_) -> Void in
+                
+        }
+    }
+    
+    func endRefresh() {
+        
+        UIView.animateKeyframesWithDuration(0.4, delay: 0, options: [], animations: {
+            self.scrollView.contentInset.top -= sceneHeight
+        }) { (_) -> Void in
+            self.isRefreshing = false
+        }
+    }
+
+    
+    
+    
+    
+    
 }
 
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
+// MARK: - extension for refreshing
+extension RefreshView {
+    
+    //when user scrolls and let go
+    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if !isRefreshing && progressPercentage == 1 {
+            self.beginRefresh()
+            targetContentOffset.memory.y = -scrollView.contentInset.top
+            delegate?.refreshViewDidRefresh(self)
+        }
+    }
+}
 
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
-// MARK: - extension
+// MARK: - extension for scrolling
 
-extension RefreshView: UIScrollViewDelegate {
+extension RefreshView {
     
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        //IF we refreshing do not scroll
+        if self.isRefreshing {
+            return
+        }
+        
+        
         let refreshViewVisibleHeight = max(0, -(scrollView.contentOffset.y + scrollView.contentInset.top))
         
         progressPercentage = min(1.0, refreshViewVisibleHeight/sceneHeight)
