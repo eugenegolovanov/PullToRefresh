@@ -13,6 +13,7 @@
 		441E533F1CE81C6E003D0E19 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 441E533D1CE81C6E003D0E19 /* LaunchScreen.storyboard */; };
 		441E53471CE81CB6003D0E19 /* RefreshTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E53461CE81CB6003D0E19 /* RefreshTVC.swift */; };
 		441E53491CE822D7003D0E19 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E53481CE822D7003D0E19 /* RefreshView.swift */; };
+		441E534B1CE8326C003D0E19 /* RefreshItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441E534A1CE8326C003D0E19 /* RefreshItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		441E53401CE81C6E003D0E19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		441E53461CE81CB6003D0E19 /* RefreshTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTVC.swift; sourceTree = "<group>"; };
 		441E53481CE822D7003D0E19 /* RefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
+		441E534A1CE8326C003D0E19 /* RefreshItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				441E53341CE81C6E003D0E19 /* AppDelegate.swift */,
 				441E53461CE81CB6003D0E19 /* RefreshTVC.swift */,
 				441E53481CE822D7003D0E19 /* RefreshView.swift */,
+				441E534A1CE8326C003D0E19 /* RefreshItem.swift */,
 				441E53381CE81C6E003D0E19 /* Main.storyboard */,
 				441E533B1CE81C6E003D0E19 /* Assets.xcassets */,
 				441E533D1CE81C6E003D0E19 /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				441E53491CE822D7003D0E19 /* RefreshView.swift in Sources */,
 				441E53351CE81C6E003D0E19 /* AppDelegate.swift in Sources */,
+				441E534B1CE8326C003D0E19 /* RefreshItem.swift in Sources */,
 				441E53471CE81CB6003D0E19 /* RefreshTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
