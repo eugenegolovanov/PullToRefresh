@@ -30,6 +30,10 @@ class RefreshView: UIView {
     weak var delegate: RefreshViewDelegate?
     var isRefreshing = false
     
+    var signRefreshItem: RefreshItem!
+    var isSignVisible = false
+
+    
     //-------------------------------------------------------------------------------------------------------------
     // MARK: - init
 
@@ -109,6 +113,12 @@ class RefreshView: UIView {
         for refreshItem in refreshItems {
             addSubview(refreshItem.view)
         }
+        
+        
+        let signImageView = UIImageView(image: UIImage(named: "sign"))
+        signRefreshItem = RefreshItem(view: signImageView, centerEnd: CGPoint(x: CGRectGetMidX(bounds), y: CGRectGetHeight(bounds) - CGRectGetHeight(signImageView.bounds)/2), parallaxRatio: 0.5, sceneHeight: sceneHeight)
+        addSubview(signImageView)
+
 
 
     }
@@ -123,6 +133,19 @@ class RefreshView: UIView {
     
     
     
+    func showSign(show: Bool) {
+        if isSignVisible == show {
+            return
+        }
+        
+        isSignVisible = show
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: [.CurveEaseInOut, .BeginFromCurrentState], animations: { () -> Void in
+            self.signRefreshItem.updateViewPositionForPercentage(show ? 1 : 0)
+            }, completion: nil)
+    }
+
+    
     //-------------------------------------------------------------------------------------------------------------
     // MARK: - Refresh Methods
 
@@ -134,6 +157,28 @@ class RefreshView: UIView {
             }) { (_) -> Void in
                 
         }
+        
+        showSign(false)
+        
+        // Animate cat and cape
+        let cape = refreshItems[3].view
+        let cat = refreshItems[4].view
+        cape.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI/32))
+        cat.transform = CGAffineTransformMakeTranslation(1.0, 0)
+        UIView.animateWithDuration(0.2, delay: 0, options: [.Repeat, .Autoreverse], animations: { () -> Void in
+            cape.transform = CGAffineTransformMakeRotation(CGFloat(M_PI/32))
+            cat.transform = CGAffineTransformMakeTranslation(-1.0, 0)
+            }, completion: nil)
+        
+        // Animate ground and buildings
+        let buildings = refreshItems[0].view
+        let ground = refreshItems[2].view
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+            ground.center.y += sceneHeight
+            buildings.center.y += sceneHeight
+            }, completion: nil)
+
+
     }
     
     func endRefresh() {
@@ -143,6 +188,15 @@ class RefreshView: UIView {
         }) { (_) -> Void in
             self.isRefreshing = false
         }
+        
+        //Remove All Animations
+        let cape = refreshItems[3].view
+        let cat = refreshItems[4].view
+        cape.transform = CGAffineTransformIdentity
+        cat.transform = CGAffineTransformIdentity
+        cape.layer.removeAllAnimations()
+        cat.layer.removeAllAnimations()
+
     }
 
     
@@ -190,7 +244,12 @@ extension RefreshView {
 //        print("refreshViewVisibleHeight = \(refreshViewVisibleHeight)")
         
         self.updateRefreshItemsPositions()
-        
+        if progressPercentage == 1 {
+            showSign(true)
+        } else {
+            showSign(false)
+        }
+//        showSign(progressPercentage == 1)
     }
     
     
