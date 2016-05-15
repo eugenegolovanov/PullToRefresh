@@ -206,23 +206,10 @@ class RefreshView: UIView {
     
 }
 
-//-------------------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------------------
-// MARK: - extension for refreshing
-extension RefreshView {
-    
-    //when user scrolls and let go
-    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if !isRefreshing && progressPercentage == 1 {
-            self.beginRefresh()
-            targetContentOffset.memory.y = -scrollView.contentInset.top
-            delegate?.refreshViewDidRefresh(self)
-        }
-    }
-}
 
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
+// MARK: -
 // MARK: - extension for scrolling
 
 extension RefreshView {
@@ -237,11 +224,9 @@ extension RefreshView {
         
         
         let refreshViewVisibleHeight = max(0, -(scrollView.contentOffset.y + scrollView.contentInset.top))
-        
         progressPercentage = min(1.0, refreshViewVisibleHeight/sceneHeight)
-        
         print("progressPercentage = \(progressPercentage)")
-//        print("refreshViewVisibleHeight = \(refreshViewVisibleHeight)")
+        
         
         self.updateRefreshItemsPositions()
         if progressPercentage == 1 {
@@ -254,3 +239,19 @@ extension RefreshView {
     
     
 }
+
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
+// MARK: -
+// MARK: - extension for end scrolling and start refreshing
+extension RefreshView {
+    
+    func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if !isRefreshing && progressPercentage == 1 {
+            self.beginRefresh()
+            targetContentOffset.memory.y = -scrollView.contentInset.top
+            delegate?.refreshViewDidRefresh(self)
+        }
+    }
+}
+

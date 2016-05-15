@@ -157,6 +157,9 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
             }, completion: {_ in
                 //finished
         })
+        
+        ovalShapeLayer.removeAllAnimations()
+
     }
 
 
