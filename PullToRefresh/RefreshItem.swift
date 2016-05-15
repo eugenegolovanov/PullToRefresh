@@ -21,14 +21,12 @@ class RefreshItem {
         self.view.center = centerStart
     }
     
+    
     func updateViewPositionForPercentage(percentage:CGFloat) {
-        let x = centerStart.x + (centerEnd.x - centerStart.x) * percentage
-        let y = centerStart.y + (centerEnd.y - centerStart.y) * percentage
-        print("X:\(x) Y:\(y)")
+
         view.center = CGPoint(
             x: centerStart.x + (centerEnd.x - centerStart.x) * percentage,
             y: centerStart.y + (centerEnd.y - centerStart.y) * percentage)
-
     }
     
     

@@ -74,19 +74,19 @@ class RefreshView: UIView {
 
         let catItem = RefreshItem(
             view: catImageView,
-            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)),
+            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/1.5),
             parallaxRatio: 1,
             sceneHeight: sceneHeight)
 
         let capeBackItem = RefreshItem(
             view: capeBack,
-            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)),
+            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/1.5),
             parallaxRatio: -3,
             sceneHeight: sceneHeight)
         
         let capeFrontItem = RefreshItem(
             view: capeFront,
-            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)),
+            centerEnd: CGPointMake(CGRectGetMidX(bounds), CGRectGetHeight(bounds) - CGRectGetHeight(catImageView.bounds)/1.5),
             parallaxRatio: -3,
             sceneHeight: sceneHeight)
 
