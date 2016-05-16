@@ -34,6 +34,9 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
     var refreshing: Bool = false
     var progress: CGFloat = 0.0
     
+    ///'infiniteProgress' does not have 1.0 limit like 'progress' does
+    var infiniteProgress: CGFloat = 0.0
+    
     var isRefreshing = false
     
     let ovalShapeLayer: CAShapeLayer = CAShapeLayer()
@@ -42,11 +45,12 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
     private let hartBlu = UIColor(red: 0.231, green: 0.741, blue: 0.792, alpha: 1.000)
     private let hartBlueberry = UIColor(red: 0.290, green: 0.584, blue: 1.000, alpha: 1.000)
     
-    
+    private let bindPoseEtalonSide:CGFloat = 110
+
     private let hartLayer = CAShapeLayer()
     private let backgroundHartLayer = CAShapeLayer()
 
-    var shadowLayer: CAShapeLayer!
+    private var shadowLayer: CAShapeLayer!
 
     
     //-------------------------------------------------------------------------------------------------------------
@@ -94,6 +98,16 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
     func redrawFromProgress() {
         hartLayer.strokeEnd = self.progress
         
+        
+
+        //Move Heart against scroll
+//        if infiniteProgress > 0.5 {
+//            hartLayer.position.y = (-(CGRectGetHeight(bounds) * infiniteProgress)) + CGRectGetHeight(bounds)/2
+//        } else {
+//            hartLayer.position.y = 0
+//        }
+        
+        
         if progress == 1 {
             hartLayer.fillColor = hartBlu.CGColor
         } else {
@@ -114,14 +128,19 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
         let width:CGFloat = frame.size.width
         let height:CGFloat = frame.size.height
         let minimumSide:CGFloat = min(width, height)
-        let bindPoseEtalonSide:CGFloat = 110
         let scale = minimumSide/bindPoseEtalonSide
         
+        //Works
         frame = CGRectMake(frame.origin.x - bindPoseEtalonSide + CGRectGetWidth(bounds),
                            frame.origin.y + bindPoseEtalonSide/2,
                            frame.size.width,
                            frame.size.height)
         
+//        frame = CGRectMake(frame.origin.x - bindPoseEtalonSide + CGRectGetWidth(bounds),
+//                           frame.origin.y + bindPoseEtalonSide*1.5,
+//                           frame.size.width,
+//                           frame.size.height)
+
 
 
         //// Hart Drawing
@@ -140,24 +159,14 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
         
         
         hartPath.moveToPoint(CGPointMake(scale * (frame.minX + 110), scale * (frame.minY + 149.25)))
-        
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 66.14), scale * (frame.minY + 119.4)), controlPoint1: CGPointMake(scale * (frame.minX + 93), scale * (frame.minY + 149.25)), controlPoint2: CGPointMake(scale * (frame.minX + 66.26), scale * (frame.minY + 119.52)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 66.14), scale * (frame.minY + 79.1)), controlPoint1: CGPointMake(scale * (frame.minX + 54.62), scale * (frame.minY + 108.27)), controlPoint2: CGPointMake(scale * (frame.minX + 55.71), scale * (frame.minY + 89.17)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 107.86), scale * (frame.minY + 79.1)), controlPoint1: CGPointMake(scale * (frame.minX + 76.57), scale * (frame.minY + 69.02)), controlPoint2: CGPointMake(scale * (frame.minX + 97.09), scale * (frame.minY + 68.69)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 109.5), scale * (frame.minY + 80.82)), controlPoint1: CGPointMake(scale * (frame.minX + 108.44), scale * (frame.minY + 79.65)), controlPoint2: CGPointMake(scale * (frame.minX + 108.98), scale * (frame.minY + 80.23)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 111.14), scale * (frame.minY + 79.1)), controlPoint1: CGPointMake(scale * (frame.minX + 110.02), scale * (frame.minY + 80.23)), controlPoint2: CGPointMake(scale * (frame.minX + 110.56), scale * (frame.minY + 79.65)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 124.94), scale * (frame.minY + 71.57)), controlPoint1: CGPointMake(scale * (frame.minX + 115.09), scale * (frame.minY + 75.28)), controlPoint2: CGPointMake(scale * (frame.minX + 119.89), scale * (frame.minY + 72.77)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 152.86), scale * (frame.minY + 79.1)), controlPoint1: CGPointMake(scale * (frame.minX + 134.63), scale * (frame.minY + 69.28)), controlPoint2: CGPointMake(scale * (frame.minX + 145.29), scale * (frame.minY + 71.79)))
-
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 152.86), scale * (frame.minY + 119.4)), controlPoint1: CGPointMake(scale * (frame.minX + 164.38), scale * (frame.minY + 90.23)), controlPoint2: CGPointMake(scale * (frame.minX + 164.38), scale * (frame.minY + 108.27)))
-        
         hartPath.addCurveToPoint(CGPointMake(scale * (frame.minX + 110), scale * (frame.minY + 149.25)), controlPoint1: CGPointMake(scale * (frame.minX + 152.74), scale * (frame.minY + 119.52)), controlPoint2: CGPointMake(scale * (frame.minX + 127.06), scale * (frame.minY + 149.25)))
 
         
@@ -168,6 +177,8 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
         
         
         let center = CGPoint(x: 0, y: 0)
+//        let center = CGPoint(x: 0, y: -bindPoseEtalonSide)
+
         
         
         self.hartLayer.path = hartPath.CGPath
@@ -217,7 +228,11 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
 
         let refreshViewVisibleHeight = max(0, -(scrollView.contentOffset.y + scrollView.contentInset.top))
         self.progress = min(max(refreshViewVisibleHeight/frame.size.height, 0.0), 1.0)
-        print("progressPercentage = \(self.progress)")
+        
+        self.infiniteProgress = max(refreshViewVisibleHeight/frame.size.height, 0.0)
+        print("progress = \(self.progress)")
+        print("infiniteProgress = \(self.infiniteProgress)")
+
         
         if !isRefreshing {
             redrawFromProgress()
@@ -267,7 +282,7 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
         
         hartLayer.addAnimation(strokeAnimationGroup, forKey: nil)
         hartLayer.fillColor = UIColor.clearColor().CGColor
-        
+        hartLayer.position = CGPoint(x: 0, y: 0)
         hartLayer.lineDashPattern = [10, 0]// [dashLength, dashSpacing]
 
     }
@@ -286,7 +301,7 @@ class HartRefreshView: UIView, UIScrollViewDelegate {
                 //finished
         })
         hartLayer.lineDashPattern = [1, 3]// [dashLength, dashSpacing]
-
+        hartLayer.position = CGPoint(x: 0, y: 0)
         hartLayer.removeAllAnimations()
 
     }
