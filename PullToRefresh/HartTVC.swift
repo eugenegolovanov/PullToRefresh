@@ -8,7 +8,7 @@
 
 import UIKit
 
-let kRefreshViewHeight:CGFloat = 110.0
+let kRefreshViewHeight:CGFloat = 110
 
 
 class HartTVC: UITableViewController, HartRefreshViewDelegate {
